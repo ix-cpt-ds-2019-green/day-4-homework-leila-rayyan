@@ -1,0 +1,63 @@
+---
+title: "HOMEWORK"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## 4c
+
+```{r precip}
+library(tidyverse)
+library(datasets)
+
+ggplot(data = ChickWeight, aes(x = weight)) + geom_histogram(binwidth = 30)
+#Shape is skewed to the right.
+ggplot(data = ChickWeight, aes(x = scale(weight))) + geom_histogram(binwidth = 0.5)
+#Data is still skewed to the right???
+
+qqnorm(ChickWeight$weight)
+qqline(ChickWeight$weight, col ="blue")
+
+qqnorm(scale(ChickWeight$weight))
+qqline(scale(ChickWeight$weight), col ="blue")
+#not different. Only scale is different because scale normalizes the data?? Maybe I'm using scale incorrectly. 
+
+dt = transform(ChickWeight, weight = log(weight))
+qqnorm(dt$weight)
+qqline(dt$weight, col ="blue")
+# line is straigther than normal
+
+dt = transform(ChickWeight, weight = sqrt(weight))
+qqnorm(dt$weight)
+qqline(dt$weight, col ="blue")
+#steeper than log transformation
+
+#2
+#normal dist.
+dt = rnorm(1000, 0, 0.5)
+qqnorm(dt)
+qqline(dt, col ="blue")
+
+#exp dist.
+dt2 = rexp(1000, 10)
+qqnorm(dt2)
+qqline(dt2, col ="blue")
+
+#log trans.
+qqnorm(log(dt2))
+qqline(log(dt2), col ="blue")
+
+```
+
+
+
+You can also embed plots, for example:
+
+```{r flight delays}
+
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
